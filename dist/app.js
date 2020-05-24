@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var domContainer = document.querySelector('#app');
-var loadMoreTrigger = document.querySelector('.loadMoreTrigger');
 var pokemons = [];
 pokemons = new Proxy(pokemons, {
     set: function (target, property, value, receiver) {
@@ -80,20 +79,28 @@ function fetchPokemon(id) {
     });
 }
 function renderPokemon(pokemon) {
-    var prevPokemon = document.querySelector(".card[data-id=\"" + (pokemon.id - 1) + "\"]");
+    // find place to insert new card
+    var pokemonIds = Array.from(document.querySelectorAll('.card')).map(function (el) { return Number(el.dataset.id); });
+    var prevPokemonId = pokemonIds.sort(function (a, b) { return a - b; }).reverse().find(function (e) { return e <= Number(pokemon.id); });
+    // create card DOM node
     var pokemonNode = document.createElement('div', {});
     pokemonNode.classList.add('card');
     pokemonNode.dataset.id = pokemon.id;
     pokemonNode.innerHTML = "\n    <h4>#" + pokemon.id + "</h4>\n    <img class=\"card--image\" src=" + pokemon.image + " alt=" + pokemon.name + " />\n    <h5 class=\"card--name\">" + pokemon.name + "</h5>\n    <h6 class=\"card--details\">" + pokemon.type + "</h6>\n  ";
-    if (!prevPokemon) {
-        domContainer.appendChild(pokemonNode);
+    // insert card into DOM
+    if (!prevPokemonId) {
+        domContainer.prepend(pokemonNode);
     }
     else {
+        var prevPokemon = document.querySelector(".card[data-id=\"" + prevPokemonId + "\"]");
         prevPokemon.after(pokemonNode);
     }
 }
 function runApp() {
+    // load first pack
     fetchPokemons();
+    // subscribe for lazy loading
+    var loadMoreTrigger = document.querySelector('.loadMoreTrigger');
     var loadMoreObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {

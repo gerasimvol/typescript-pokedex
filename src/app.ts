@@ -1,5 +1,4 @@
 const domContainer: HTMLElement | any = document.querySelector('#app')
-const loadMoreTrigger: HTMLElement | any = document.querySelector('.loadMoreTrigger')
 
 interface IPokemon {
   id: number;
@@ -10,13 +9,13 @@ interface IPokemon {
 
 let pokemons: Array<IPokemon> = []
 pokemons = new Proxy(pokemons, {
-  set (target, property, value, receiver) {
+  set(target, property, value, receiver) {
     renderPokemon(value)
     return true
   }
 })
 
-const fetchPokemons = (function (){
+const fetchPokemons = (function () {
   let startFrom = 1
   let currentPage = 1
   const perPage = 10
@@ -43,9 +42,13 @@ async function fetchPokemon(id: number): Promise<void> {
   pokemons[pokemon.id - 1] = pokemon
 }
 
-function renderPokemon(pokemon:IPokemon): void {
-  const prevPokemon = document.querySelector(`.card[data-id="${pokemon.id - 1}"]`)
-  let pokemonNode: HTMLElement | any = document.createElement('div', {  })
+function renderPokemon(pokemon: IPokemon): void {
+  // find place to insert new card
+  const pokemonIds: Array<number> = Array.from(document.querySelectorAll('.card')).map(el => Number(el.dataset.id))
+  const prevPokemonId: number = pokemonIds.sort((a,b) => a - b).reverse().find(e => e <= Number(pokemon.id))
+
+  // create card DOM node
+  let pokemonNode: HTMLElement | any = document.createElement('div', {})
   pokemonNode.classList.add('card')
   pokemonNode.dataset.id = pokemon.id
   pokemonNode.innerHTML = `
@@ -55,15 +58,21 @@ function renderPokemon(pokemon:IPokemon): void {
     <h6 class="card--details">${pokemon.type}</h6>
   `
 
-  if (!prevPokemon) {
-    domContainer.appendChild(pokemonNode)
+  // insert card into DOM
+  if (!prevPokemonId) {
+    domContainer.prepend(pokemonNode)
   } else {
+    const prevPokemon = document.querySelector(`.card[data-id="${prevPokemonId}"]`)
     prevPokemon.after(pokemonNode)
   }
 }
 
 function runApp(): void {
+  // load first pack
   fetchPokemons()
+
+  // subscribe for lazy loading
+  const loadMoreTrigger: HTMLElement | any = document.querySelector('.loadMoreTrigger')
   const loadMoreObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
