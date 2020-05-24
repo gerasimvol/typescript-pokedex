@@ -63,6 +63,7 @@ function renderPokemon(pokemon:IPokemon): void {
 }
 
 function runApp(): void {
+  fetchPokemons()
   const loadMoreObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

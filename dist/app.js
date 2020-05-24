@@ -93,6 +93,7 @@ function renderPokemon(pokemon) {
     }
 }
 function runApp() {
+    fetchPokemons();
     var loadMoreObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {

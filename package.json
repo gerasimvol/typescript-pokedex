@@ -5,6 +5,13 @@
     "dev": "tsc -w",
     "deploy": "surge --domain typescript-pokedex.surge.sh ./dist"
   },
-  "author": "",
-  "license": "ISC"
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run deploy"
+    }
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^4.2.5"
+  }
 }
