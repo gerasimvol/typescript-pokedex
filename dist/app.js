@@ -81,12 +81,12 @@ function fetchPokemon(id) {
 function renderPokemon(pokemon) {
     // find place to insert new card
     var pokemonIds = Array.from(document.querySelectorAll('.card')).map(function (el) { return Number(el.dataset.id); });
-    var prevPokemonId = pokemonIds.sort(function (a, b) { return a - b; }).reverse().find(function (e) { return e <= Number(pokemon.id); });
+    var prevPokemonId = pokemonIds.sort(function (a, b) { return b - a; }).find(function (e) { return e <= Number(pokemon.id); });
     // create card DOM node
     var pokemonNode = document.createElement('div', {});
     pokemonNode.classList.add('card');
     pokemonNode.dataset.id = pokemon.id;
-    pokemonNode.innerHTML = "\n    <h4>#" + pokemon.id + "</h4>\n    <img class=\"card--image\" src=" + pokemon.image + " alt=" + pokemon.name + " />\n    <h5 class=\"card--name\">" + pokemon.name + "</h5>\n    <h6 class=\"card--details\">" + pokemon.type + "</h6>\n  ";
+    pokemonNode.innerHTML = "\n    <h4 class=\"card__id\">#" + pokemon.id + "</h4>\n    <img class=\"card__image\" src=" + pokemon.image + " alt=" + pokemon.name + " />\n    <h5 class=\"card__name\">" + pokemon.name + "</h5>\n    <h6 class=\"card__details\">" + pokemon.type + "</h6>\n  ";
     // insert card into DOM
     if (!prevPokemonId) {
         domContainer.prepend(pokemonNode);

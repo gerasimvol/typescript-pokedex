@@ -45,17 +45,17 @@ async function fetchPokemon(id: number): Promise<void> {
 function renderPokemon(pokemon: IPokemon): void {
   // find place to insert new card
   const pokemonIds: Array<number> = Array.from(document.querySelectorAll('.card')).map(el => Number(el.dataset.id))
-  const prevPokemonId: number = pokemonIds.sort((a,b) => a - b).reverse().find(e => e <= Number(pokemon.id))
+  const prevPokemonId: number = pokemonIds.sort((a,b) => b - a).find(e => e <= Number(pokemon.id))
 
   // create card DOM node
   let pokemonNode: HTMLElement | any = document.createElement('div', {})
   pokemonNode.classList.add('card')
   pokemonNode.dataset.id = pokemon.id
   pokemonNode.innerHTML = `
-    <h4>#${pokemon.id}</h4>
-    <img class="card--image" src=${pokemon.image} alt=${pokemon.name} />
-    <h5 class="card--name">${pokemon.name}</h5>
-    <h6 class="card--details">${pokemon.type}</h6>
+    <h4 class="card__id">#${pokemon.id}</h4>
+    <img class="card__image" src=${pokemon.image} alt=${pokemon.name} />
+    <h5 class="card__name">${pokemon.name}</h5>
+    <h6 class="card__details">${pokemon.type}</h6>
   `
 
   // insert card into DOM

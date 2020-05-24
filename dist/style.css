@@ -1,4 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap");
+@font-face {
+  font-family: "Pixelar";
+  src: url("./Pixelar.woff2") format("woff2");
+}
+
+:root {
+  --active: #a20202;
+}
 
 * {
   margin: 0;
@@ -9,7 +16,7 @@
 body {
   background: #333;
   line-height: 1.5;
-  font-family: "Caveat", cursive;
+  font-family: "Pixelar", Arial, Helvetica, sans-serif;
 }
 
 main {
@@ -20,7 +27,7 @@ main {
 
 main > h1 {
   text-align: center;
-  color: #e4c439;
+  color: #fff;
   margin-bottom: 2rem;
   font-size: 2rem;
   text-transform: uppercase;
@@ -37,11 +44,10 @@ main > h1 {
 .card {
   width: 12rem auto;
   background: #444;
-  color: #e4c439;
+  color: var(--active);
   padding: 1rem;
-  border-radius: 10px;
-  border-top: 0.5px solid #cebf7b;
-  border-bottom: 0.5px solid #cebf7b;
+  border-radius: 2px;
+  border-top: 1px solid var(--active);;
   text-align: center;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   position: relative;
@@ -56,33 +62,32 @@ main > h1 {
   transform: scale(1.05);
 }
 
-.card--id {
-  background: #cebf7b;
-  width: 3rem;
-  color: #333;
-  padding: 0.1rem;
+.card__id {
+  background: var(--active);;
+  width: 2.5em;
+  color: #fff;
+  border-bottom-right-radius: 2px;
   font-weight: 700;
   position: absolute;
-  border-radius: 0 0 10px 0;
   top: 0;
   left: 0;
 }
-.card--name {
+.card__name {
   text-transform: capitalize;
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
 }
 
-.card--image {
+.card__image {
   width: 150px;
   display: block;
   margin: auto;
 }
 
-.card--details {
+.card__details {
   font-size: 1.3rem;
-  color: #dbca80;
+  color: rgb(192, 190, 190);
 }
 
 .loadMoreTrigger {
