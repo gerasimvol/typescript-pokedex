@@ -1,4 +1,4 @@
-const domContainer: HTMLElement | any = document.querySelector('#app')
+const domContainer: HTMLElement | null = document.querySelector('#app')
 
 interface IPokemon {
   id: number;
@@ -72,7 +72,7 @@ function runApp(): void {
   fetchPokemons()
 
   // subscribe for lazy loading
-  const loadMoreTrigger: HTMLElement | any = document.querySelector('.loadMoreTrigger')
+  const loadMoreTrigger: HTMLElement | null = document.querySelector('.loadMoreTrigger')
   const loadMoreObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
