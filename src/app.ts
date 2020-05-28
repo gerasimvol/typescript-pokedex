@@ -44,7 +44,8 @@ async function fetchPokemon(id: number): Promise<void> {
 
 function renderPokemon(pokemon: IPokemon): void {
   // find place to insert new card
-  const pokemonIds: Array<number> = Array.from(document.querySelectorAll('.card')).map(el => Number(el.dataset.id))
+  const cards: Array<HTMLElement> = Array.from(document.querySelectorAll('.card'))
+  const pokemonIds: Array<number> = cards.map(el => Number(el.dataset.id))
   const prevPokemonId: number = pokemonIds.sort((a,b) => b - a).find(e => e <= Number(pokemon.id))
 
   // create card DOM node
